@@ -3,51 +3,54 @@
     <div class="select-bg" @click="cancel"></div>
     <div class="select-box">
       <p class="select-btn">
-        <span style="float: left" @click="cancel">取消</span>
-        <span style="float: right; color: #107e52" @click="complete">完成</span>
+        <span @click="cancel">取消</span>
+        <span style="color: #107e52" @click="select">完成</span>
       </p>
       <div class="select-content">
         <div class="select-seat"></div>
         <ul
-          @touchstart="touchStart($event, 'province')"
-          @touchmove="touchMove($event, 'province')"
-          @touchend="touchEnd($event, 'province')"
-          :style="provinceStyle"
+          ref="wrapper"
+          @touchstart="touchStart($event, 'level1')"
+          @touchmove="touchMove($event, 'level1')"
+          @touchend="touchEnd($event, 'level1')"
+          :style="level1Style"
           :class="[{ 'select-ani': addSelect }]"
         >
           <li
-            v-for="(item, index) in list"
-            :class="[{ 'select-active': index == provinceIndex }]"
+            v-for="(item, index) in level1List"
+            :class="[{ 'select-active': index == level1Index }]"
             :key="index"
           >
             {{ item.name }}
           </li>
         </ul>
         <ul
-          @touchstart="touchStart($event, 'city')"
-          @touchmove="touchMove($event, 'city')"
-          @touchend="touchEnd($event, 'city')"
-          :style="cityStyle"
+          @touchstart="touchStart($event, 'level2')"
+          @touchmove="touchMove($event, 'level2')"
+          @touchend="touchEnd($event, 'level2')"
+          :style="level2Style"
           :class="[{ 'select-ani': addSelect }]"
+          v-if="levelNumber > 1"
         >
           <li
-            v-for="(item, index) in list2"
-            :class="[{ addSelectActive: index == cityIndex }]"
+            v-for="(item, index) in level2List"
+            :class="[{ addSelectActive: index == level2Index }]"
             :key="index"
           >
             {{ item.name }}
           </li>
         </ul>
         <ul
-          @touchstart="touchStart($event, 'district')"
-          @touchmove="touchMove($event, 'district')"
-          @touchend="touchEnd($event, 'district')"
-          :style="districtStyle"
+          @touchstart="touchStart($event, 'level3')"
+          @touchmove="touchMove($event, 'level3')"
+          @touchend="touchEnd($event, 'level3')"
+          :style="level3Style"
           :class="[{ 'select-ani': addSelect }]"
+          v-if="levelNumber > 2"
         >
           <li
-            v-for="(item, index) in list3"
-            :class="[{ addSelectActive: index == districtIndex }]"
+            v-for="(item, index) in level3List"
+            :class="[{ addSelectActive: index == level3Index }]"
             :key="index"
           >
             {{ item.name }}
@@ -60,106 +63,124 @@
 
 <script>
 export default {
+  props: {
+    level1List: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    level2List: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    level3List: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    defaultValue: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    },
+    levelNumber: {
+      type: Number,
+      default: 3
+    }
+  },
   data () {
     return {
-      list: [],
-      list2: [],
-      list3: [],
-      provinceStyle: {
+      level1Style: {
         WebkitTransform: 'translate3d(0px,0px,0px)'
       },
-      cityStyle: {
+      level2Style: {
         WebkitTransform: 'translate3d(0px,0px,0px)'
       },
-      districtStyle: {
+      level3Style: {
         WebkitTransform: 'translate3d(0px,0px,0px)'
       },
       startTop: 0,
-      provinceIndex: 0,
-      cityIndex: 0,
-      districtIndex: 0,
+      level1Index: 0,
+      level2Index: 0,
+      level3Index: 0,
       translateY: 0,
       maxScroll: 0,
       addHeight: 0,
       addSelect: false,
-      provinceVal: '',
-      cityVal: '',
-      areaVal: '',
+      optionHeight: 0,
+      level1Val: '',
+      level2Val: '',
+      level3Val: '',
       val: {
-        provinceVal: '',
-        cityVal: '',
-        areaVal: ''
+        level1Val: {},
+        level2Val: {},
+        level3Val: {}
       }
     }
   },
   watch: {
-    // 监听省滑动
-    provinceVal (value) {
-      this.list2 = [
-        { name: '11', value: '11' },
-        { name: '21', value: '21' },
-        { name: '31', value: '31' },
-        { name: '41', value: '41' }
-      ]
-      this.list3 = [{ name: '-' }]
-      this.cityVal = this.list2[0].value
+    level1Val (value) {
+      this.level2Val = this.level2List[0].value
+      this.level3Val = this.level3List[0].value
     },
-    // 监听市滑动
-    cityVal (value) {
-      if (value) {
-        this.list3 = [
-          { name: '111', value: '111' },
-          { name: '211', value: '211' },
-          { name: '311', value: '311' },
-          { name: '411', value: '411' }
-        ]
-      }
+    level2Val (value) {
+      this.level3Val = this.level3List[0].value
     }
   },
-  created () {
-    // 拿省的数据
-    this.list = [
-      { name: '1', value: '1' },
-      { name: '2', value: '2' },
-      { name: '3', value: '3' },
-      { name: '4', value: '4' }
-    ]
-    this.val.provinceVal = this.list[0]
-    // 拿市区的数据
-    this.list2 = [
-      { name: '11', value: '11' },
-      { name: '21', value: '21' },
-      { name: '31', value: '31' },
-      { name: '41', value: '41' }
-    ]
-    this.val.cityVal = this.list2[0]
-    this.val.areaVal = {
-      name: '',
-      value: ''
+  mounted () {
+    this.optionHeight = parseInt(this.$refs['wrapper'].children[0].offsetHeight)
+    this.val.level1Val = this.defaultValue[0] ? this.defaultValue[0] : {}
+    this.val.level2Val = this.defaultValue[1] ? this.defaultValue[1] : {}
+    this.val.level3Val = this.defaultValue[2] ? this.defaultValue[2] : {}
+    this.level1Val = this.defaultValue[0] ? this.defaultValue[0]['value'] : ''
+    this.level2Val = this.defaultValue[1] ? this.defaultValue[1]['value'] : ''
+    this.level3Val = this.defaultValue[2] ? this.defaultValue[2]['value'] : ''
+    if (this.level1Val) {
+      this.level1List.map((item, index) => {
+        if (item.value === this.level1Val) {
+          this.level1Style.WebkitTransform =
+              'translate3d(0px,-' +
+              (index * this.optionHeight) +
+              'px,0px)'
+        }
+      })
     }
-    // 第一条数据为直辖市 so '-' 符号表示为第三列
-    this.list3 = [{ name: '-' }]
+    if (this.level2Val) {
+      this.level2List.map((item, index) => {
+        if (item.value === this.level2Val) {
+          this.level2Style.WebkitTransform =
+              'translate3d(0px,-' +
+              (index * this.optionHeight) +
+              'px,0px)'
+        }
+      })
+    }
+    if (this.level3Val) {
+      this.level3List.map((item, index) => {
+        if (item.value === this.level3Val) {
+          this.level3Style.WebkitTransform =
+              'translate3d(0px,-' +
+              (index * this.optionHeight) +
+              'px,0px)'
+        }
+      })
+    }
   },
   methods: {
-    // 点击取消
     cancel () {
       this.$emit('cancel', false)
     },
-    // 点击完成
-    complete () {
-      if (!this.val.areaVal.value) {
-        this.val.areaVal = {
-          name: '',
-          value: ''
-        }
+    select () {
+      let selectValue = {}
+      for (let i = 1; i <= this.levelNumber; i++) {
+        selectValue['level' + i + 'Val'] = this.val['level' + i + 'Val']
       }
-      if (!this.val.cityVal.value) {
-        this.val.cityVal = {
-          name: '',
-          value: ''
-        }
-      }
-      console.log(this.val)
+      this.$emit('select', selectValue)
     },
     // 滑动开始
     touchStart (e, val) {
@@ -169,27 +190,27 @@ export default {
       this.maxScroll = this.addHeight * e.currentTarget.children.length
       this.startTop = e.targetTouches[0].pageY
       switch (val) {
-        case 'province':
+        case 'level1':
           this.translateY = parseInt(
-            this.provinceStyle.WebkitTransform.slice(
-              this.provinceStyle.WebkitTransform.indexOf(',') + 1,
-              this.provinceStyle.WebkitTransform.lastIndexOf(',')
+            this.level1Style.WebkitTransform.slice(
+              this.level1Style.WebkitTransform.indexOf(',') + 1,
+              this.level1Style.WebkitTransform.lastIndexOf(',')
             )
           )
           break
-        case 'city':
+        case 'level2':
           this.translateY = parseInt(
-            this.cityStyle.WebkitTransform.slice(
-              this.cityStyle.WebkitTransform.indexOf(',') + 1,
-              this.cityStyle.WebkitTransform.lastIndexOf(',')
+            this.level2Style.WebkitTransform.slice(
+              this.level2Style.WebkitTransform.indexOf(',') + 1,
+              this.level2Style.WebkitTransform.lastIndexOf(',')
             )
           )
           break
-        case 'district':
+        case 'level3':
           this.translateY = parseInt(
-            this.districtStyle.WebkitTransform.slice(
-              this.districtStyle.WebkitTransform.indexOf(',') + 1,
-              this.districtStyle.WebkitTransform.lastIndexOf(',')
+            this.level3Style.WebkitTransform.slice(
+              this.level3Style.WebkitTransform.indexOf(',') + 1,
+              this.level3Style.WebkitTransform.lastIndexOf(',')
             )
           )
           break
@@ -201,55 +222,55 @@ export default {
     touchMove (e, val) {
       e.preventDefault()
       switch (val) {
-        case 'province':
+        case 'level1':
           if (e.targetTouches[0].pageY - this.startTop + this.translateY > 0) {
-            this.provinceStyle.WebkitTransform = 'translate3d(0px,0px,0px)'
+            this.level1Style.WebkitTransform = 'translate3d(0px,0px,0px)'
           } else if (
             e.targetTouches[0].pageY - this.startTop + this.translateY <
             -(this.maxScroll - this.addHeight)
           ) {
-            this.provinceStyle.WebkitTransform =
+            this.level1Style.WebkitTransform =
               'translate3d(0px,' +
               -(this.maxScroll - this.addHeight) +
               'px,0px)'
           } else {
-            this.provinceStyle.WebkitTransform =
+            this.level1Style.WebkitTransform =
               'translate3d(0px,' +
               (e.targetTouches[0].pageY - this.startTop + this.translateY) +
               'px,0px)'
           }
           break
-        case 'city':
+        case 'level2':
           if (e.targetTouches[0].pageY - this.startTop + this.translateY > 0) {
-            this.cityStyle.WebkitTransform = 'translate3d(0px,0px,0px)'
+            this.level2Style.WebkitTransform = 'translate3d(0px,0px,0px)'
           } else if (
             e.targetTouches[0].pageY - this.startTop + this.translateY <
             -(this.maxScroll - this.addHeight)
           ) {
-            this.cityStyle.WebkitTransform =
+            this.level2Style.WebkitTransform =
               'translate3d(0px,' +
               -(this.maxScroll - this.addHeight) +
               'px,0px)'
           } else {
-            this.cityStyle.WebkitTransform =
+            this.level2Style.WebkitTransform =
               'translate3d(0px,' +
               (e.targetTouches[0].pageY - this.startTop + this.translateY) +
               'px,0px)'
           }
           break
-        case 'district':
+        case 'level3':
           if (e.targetTouches[0].pageY - this.startTop + this.translateY > 0) {
-            this.districtStyle.WebkitTransform = 'translate3d(0px,0px,0px)'
+            this.level3Style.WebkitTransform = 'translate3d(0px,0px,0px)'
           } else if (
             e.targetTouches[0].pageY - this.startTop + this.translateY <
             -(this.maxScroll - this.addHeight)
           ) {
-            this.districtStyle.WebkitTransform =
+            this.level3Style.WebkitTransform =
               'translate3d(0px,' +
               -(this.maxScroll - this.addHeight) +
               'px,0px)'
           } else {
-            this.districtStyle.WebkitTransform =
+            this.level3Style.WebkitTransform =
               'translate3d(0px,' +
               (e.targetTouches[0].pageY - this.startTop + this.translateY) +
               'px,0px)'
@@ -264,65 +285,65 @@ export default {
       e.preventDefault()
       this.addSelect = true
       switch (val) {
-        case 'province':
-          let provinceTranslateY = parseInt(
-            this.provinceStyle.WebkitTransform.slice(
-              this.provinceStyle.WebkitTransform.indexOf(',') + 1,
-              this.provinceStyle.WebkitTransform.lastIndexOf(',')
+        case 'level1':
+          let level1TranslateY = parseInt(
+            this.level1Style.WebkitTransform.slice(
+              this.level1Style.WebkitTransform.indexOf(',') + 1,
+              this.level1Style.WebkitTransform.lastIndexOf(',')
             )
           )
-          this.provinceIndex = -Math.round(provinceTranslateY / this.addHeight)
-          this.provinceStyle.WebkitTransform =
+          this.level1Index = -Math.round(level1TranslateY / this.addHeight)
+          this.level1Style.WebkitTransform =
             'translate3d(0px,' +
-            Math.round(provinceTranslateY / this.addHeight) * this.addHeight +
+            Math.round(level1TranslateY / this.addHeight) * this.addHeight +
             'px,0px)'
-          this.cityStyle.WebkitTransform = this.districtStyle.WebkitTransform =
+          this.level2Style.WebkitTransform = this.level3Style.WebkitTransform =
             'translate3d(0px,0px,0px)'
-          this.cityIndex = this.districtIndex = 0
+          this.level2Index = this.level3Index = 0
+          this.$emit('changeSelect', {'level': 'level1', 'selectValue': this.level1List[this.level1Index].value})
           break
-        case 'city':
-          let cityTranslateY = parseInt(
-            this.cityStyle.WebkitTransform.slice(
-              this.cityStyle.WebkitTransform.indexOf(',') + 1,
-              this.cityStyle.WebkitTransform.lastIndexOf(',')
+        case 'level2':
+          let level2TranslateY = parseInt(
+            this.level2Style.WebkitTransform.slice(
+              this.level2Style.WebkitTransform.indexOf(',') + 1,
+              this.level2Style.WebkitTransform.lastIndexOf(',')
             )
           )
-          this.cityIndex = -Math.round(cityTranslateY / this.addHeight)
-          this.cityStyle.WebkitTransform =
+          this.level2Index = -Math.round(level2TranslateY / this.addHeight)
+          this.level2Style.WebkitTransform =
             'translate3d(0px,' +
-            Math.round(cityTranslateY / this.addHeight) * this.addHeight +
+            Math.round(level2TranslateY / this.addHeight) * this.addHeight +
             'px,0px)'
-          this.districtStyle.WebkitTransform = 'translate3d(0px,0px,0px)'
-          this.districtIndex = 0
+          this.level3Style.WebkitTransform = 'translate3d(0px,0px,0px)'
+          this.level3Index = 0
+          this.$emit('changeSelect', {'level': 'level2', 'selectValue': this.level2List[this.level2Index].value})
           break
-        case 'district':
-          let districtTranslateY = parseInt(
-            this.districtStyle.WebkitTransform.slice(
-              this.districtStyle.WebkitTransform.indexOf(',') + 1,
-              this.districtStyle.WebkitTransform.lastIndexOf(',')
+        case 'level3':
+          let level3TranslateY = parseInt(
+            this.level3Style.WebkitTransform.slice(
+              this.level3Style.WebkitTransform.indexOf(',') + 1,
+              this.level3Style.WebkitTransform.lastIndexOf(',')
             )
           )
-          this.districtIndex = -Math.round(districtTranslateY / this.addHeight)
-          this.districtStyle.WebkitTransform =
+          this.level3Index = -Math.round(level3TranslateY / this.addHeight)
+          this.level3Style.WebkitTransform =
             'translate3d(0px,' +
-            Math.round(districtTranslateY / this.addHeight) * this.addHeight +
+            Math.round(level3TranslateY / this.addHeight) * this.addHeight +
             'px,0px)'
+          this.$emit('changeSelect', {'level': 'level3', 'selectValue': this.level3List[this.level3Index].value})
           break
         default:
           break
       }
-      // 滑动结束后 处理数据
       this.dataProcessing()
     },
-    // 数据处理
     dataProcessing () {
-      // 滑动数据传输 数据处理
-      this.val.provinceVal = this.list[this.provinceIndex]
-      this.provinceVal = this.list[this.provinceIndex].value
-      this.val.cityVal = this.list2[this.cityIndex]
-      this.cityVal = this.list2[this.cityIndex].value
-      this.val.areaVal = this.list3[this.districtIndex]
-      this.areaVal = this.list3[this.districtIndex].value
+      this.val.level1Val = this.level1List[this.level1Index]
+      this.level1Val = this.level1List[this.level1Index].value
+      this.val.level2Val = this.level2List[this.level2Index]
+      this.level2Val = this.level2List[this.level2Index].value
+      this.val.level3Val = this.level3List[this.level3Index]
+      this.level3Val = this.level3List[this.level3Index].value
     }
   }
 }
@@ -361,6 +382,8 @@ export default {
       border-bottom: 1px solid #ccc;
       padding: 0 0.5rem;
       background: #f9f9f9;
+      display: flex;
+      justify-content: space-between;
     }
   }
   .select-content {

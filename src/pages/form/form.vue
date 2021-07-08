@@ -35,27 +35,22 @@
             <option>3</option>
           </select>
         </ymLabel>
+        <ymLabel :title="'input框'">
+          <input class="formInput"/>
+        </ymLabel>
+        <ymLabel :title="'input框'">
+          <input class="formInput"/>
+        </ymLabel>
+        <ymLabel :title="'input框'">
+          <input class="formInput"/>
+        </ymLabel>
+        <ymLabel :title="'input框'">
+          <input class="formInput"/>
+        </ymLabel>
+        <ymLabel :title="'input框'">
+          <input class="formInput"/>
+        </ymLabel>
       </div>
-      <h-select v-model="address" :showValue="showAddress">
-        <h-wrapper prop="province">
-            <h-option
-                v-for="item in provinceList"
-                  :key="item.id"
-                  :value="item.id"
-            >
-                  {{item.name}}
-            </h-option>
-        </h-wrapper>
-        <h-wrapper prop="city">
-            <h-option
-                v-for="item in cityList"
-                  :key="item.id"
-                  :value="item.id"
-            >
-                  {{item.name}}
-            </h-option>
-        </h-wrapper>
-      </h-select>
       <p @click="showSheet">sheet</p>
       <ymSheet
         :isShow="isShow"
@@ -63,6 +58,7 @@
         :sheetName = "'title'"
         @clickSheet = "clickSheet"
       />
+      <div class="btn">提 交</div>
     </div>
 </template>
 <script>
@@ -142,5 +138,15 @@ export default{
   .formInput{
     font-size:1rem;
   }
+}
+.btn{
+  width: 90%;
+  margin: 3rem auto;
+  background: #1da1f2;
+  text-align: center;
+  height: 3rem;
+  line-height: 3rem;
+  color: #fff;
+  border-radius: .5rem;
 }
 </style>

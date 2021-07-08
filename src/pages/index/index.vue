@@ -7,14 +7,15 @@
         <p @click="dialogShow">dialog</p>
         <ym-loading ref="loading" text="加载中"/>
         <ym-popup-dialog ref = 'dialog'/>
-        <div class="swiper">
+        <!-- <div class="swiper">
           <ym-swiper height="10rem"  :imgList="imgs" effect="normal" @onClickImg="handleSwiperClick"></ym-swiper>
-        </div>
-        <img :src="require('@/static/images/lottery/btn.png')" />
+        </div> -->
+        <ym-select></ym-select>
     </div>
 </template>
 <script>
 import ymSwiper from '../../components/ym-swiper/ym-swiper.vue'
+import ymSelect from '../../components/ym-select/ym-select.vue'
 import ymPopupDialog from '../../components/ym-popup-dialog/ym-popup-dialog.vue'
 export default{
   data () {
@@ -24,7 +25,8 @@ export default{
   },
   components: {
     ymSwiper,
-    ymPopupDialog
+    ymPopupDialog,
+    ymSelect
   },
   methods: {
     setStore () {

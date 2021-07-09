@@ -18,7 +18,7 @@
           @changeSelect="changeSelect"
           @select="select"
           @cancel="cancel"
-          :levelNumber="2"
+          :levelNumber="1"
         ></ym-select>
     </div>
 </template>

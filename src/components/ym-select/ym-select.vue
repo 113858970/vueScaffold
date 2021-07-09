@@ -34,7 +34,7 @@
         >
           <li
             v-for="(item, index) in level2List"
-            :class="[{ addSelectActive: index == level2Index }]"
+            :class="[{ 'select-active': index == level2Index }]"
             :key="index"
           >
             {{ item.name }}
@@ -50,7 +50,7 @@
         >
           <li
             v-for="(item, index) in level3List"
-            :class="[{ addSelectActive: index == level3Index }]"
+            :class="[{ 'select-active': index == level3Index }]"
             :key="index"
           >
             {{ item.name }}
@@ -96,13 +96,18 @@ export default {
   data () {
     return {
       level1Style: {
-        WebkitTransform: 'translate3d(0px,0px,0px)'
+        WebkitTransform: 'translate3d(0px,0px,0px)',
+        width: '33.33%'
       },
       level2Style: {
-        WebkitTransform: 'translate3d(0px,0px,0px)'
+        WebkitTransform: 'translate3d(0px,0px,0px)',
+        left: '33.33%',
+        width: '33.33%'
       },
       level3Style: {
-        WebkitTransform: 'translate3d(0px,0px,0px)'
+        WebkitTransform: 'translate3d(0px,0px,0px)',
+        left: '66.66%',
+        width: '33.33%'
       },
       startTop: 0,
       level1Index: 0,
@@ -170,6 +175,11 @@ export default {
         }
       })
     }
+    this.level1Style.width = this.levelNumber === 1 ? '100%' : this.levelNumber === 2 ? '50%' : '33.33%'
+    this.level2Style.left = this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
+    this.level2Style.width = this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
+    this.level3Style.left = this.levelNumber === 3 ? '66.66%' : ''
+    console.log(this.level1Style)
   },
   methods: {
     cancel () {
@@ -411,7 +421,6 @@ export default {
       background: #f9f9f9;
     }
     ul {
-      width: 33.333333%;
       position: absolute;
       left: 0;
       top: 4rem;
@@ -431,12 +440,6 @@ export default {
         transform: scale(1.1);
         transition: 0.5s;
       }
-    }
-    ul:nth-of-type(2) {
-      left: 33.333333%;
-    }
-    ul:nth-of-type(3) {
-      left: 66.666666%;
     }
   }
 }

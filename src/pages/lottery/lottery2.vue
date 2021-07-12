@@ -56,7 +56,7 @@
   play() 开始抽奖 （调用该方法时，游戏才会开始, 没有参数）
   stop(index) 缓慢停止抽奖 （调用该方法时，才会缓慢停止, 参数是中奖的索引；如果stop方法传入-1, 那游戏立即停止, 并且end回调不会触发）
 */
-import { LuckyGrid, LuckyWheel } from 'vue-luck-draw'
+import { LuckyGrid, LuckyWheel } from 'vue-luck-draw';
 export default {
   data () {
     return {
@@ -82,7 +82,7 @@ export default {
         background: 'linear-gradient(270deg, #FFDCB8, #FDC689)',
         shadow: ''
       }
-    }
+    };
   },
   components: {
     LuckyGrid,
@@ -102,11 +102,11 @@ export default {
           { src: require('@/static/images/lottery/l2_icon3.png'), width: '65%', top: '13%' },
           { src: require('@/static/images/lottery/l2_icon2.png'), width: '50%', top: '73%' }
         ]
-      }]
+      }];
     }
   },
   mounted () {
-    this.getPrizeList()
+    this.getPrizeList();
   },
   methods: {
     getPrizeList () {
@@ -121,34 +121,34 @@ export default {
           { name: '50元红包', img: require('@/static/images/lottery/l2_icon1.png') },
           { name: '0.3元红包', img: require('@/static/images/lottery/l2_icon1.png') },
           { name: '5元红包', img: require('@/static/images/lottery/l2_icon1.png') }
-        ]
-        const prizes = []
-        this.luckyNum = 1
-        let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
+        ];
+        const prizes = [];
+        this.luckyNum = 1;
+        let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]];
         for (let i = 0; i < 8; i++) {
-          let item = data[i]
+          let item = data[i];
           prizes.push({
             index: i,
             x: axis[i][0],
             y: axis[i][1],
             fonts: [{ text: item.name, top: '70%' }],
             imgs: [{ src: item.img, width: '55%', top: '8%' }]
-          })
+          });
         }
-        this.prizes = prizes
-      }, 0)
+        this.prizes = prizes;
+      }, 0);
     },
     startCallBack () {
-      if (!this.luckyNum) return alert('还剩0次抽奖机会')
-      this.$refs.LuckDraw.play()
+      if (!this.luckyNum) return alert('还剩0次抽奖机会');
+      this.$refs.LuckDraw.play();
       setTimeout(() => {
-        this.$refs.LuckDraw.stop(Math.random() * 7 >> 0)
-      }, 2000)
+        this.$refs.LuckDraw.stop(Math.random() * 7 >> 0);
+      }, 2000);
     },
     endCallBack (prize) {
-      alert(`恭喜你获得大奖: ${prize.fonts[0].text}`)
-      this.luckyNum--
+      alert(`恭喜你获得大奖: ${prize.fonts[0].text}`);
+      this.luckyNum--;
     }
   }
-}
+};
 </script>

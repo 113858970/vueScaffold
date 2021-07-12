@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import { LuckyGrid, LuckyWheel } from 'vue-luck-draw'
+import { LuckyGrid, LuckyWheel } from 'vue-luck-draw';
 export default {
   data () {
     return {
@@ -34,10 +34,10 @@ export default {
         fontColor: '#a70c1b',
         fontSize: '10px'
       }
-    }
+    };
   },
   mounted () {
-    this.getPrizesList()
+    this.getPrizesList();
   },
   components: {
     LuckyGrid,
@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     getPrizesList () {
-      const prizes = []
+      const prizes = [];
       let data = [
         { name: '谢谢参与', img: require('@/static/images/lottery/icon1.png') },
         { name: '红包', img: require('@/static/images/lottery/icon2.png') },
@@ -55,28 +55,28 @@ export default {
         { name: '红包', img: require('@/static/images/lottery/icon2.png') },
         { name: '抽奖次数+3', img: require('@/static/images/lottery/icon3.png') },
         { name: '礼物', img: require('@/static/images/lottery/icon4.png') }
-      ]
+      ];
       data.forEach((item, index) => {
         prizes.push({
           name: item.name,
           background: index % 2 === 0 ? '#ffd099' : '#fff',
           fonts: [{ text: item.name, top: '8%' }],
           imgs: [{ src: item.img, width: '30%', top: '30%' }]
-        })
-      })
-      this.prizes = prizes
+        });
+      });
+      this.prizes = prizes;
     },
     startCallBack () {
-      this.$refs.LuckyWheel.play()
+      this.$refs.LuckyWheel.play();
       setTimeout(() => {
-        this.$refs.LuckyWheel.stop(Math.random() * 8 >> 0)
-      }, 2000)
+        this.$refs.LuckyWheel.stop(Math.random() * 8 >> 0);
+      }, 2000);
     },
     endCallBack (prize) {
-      alert(`恭喜你获得${prize.name}`)
+      alert(`恭喜你获得${prize.name}`);
     }
   }
-}
+};
 </script>
 
 <style scoped>

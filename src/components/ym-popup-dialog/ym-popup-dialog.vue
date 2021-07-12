@@ -24,30 +24,30 @@ export default{
       btns: [],
       reject: null,
       resolve: null
-    }
+    };
   },
   methods: {
     show (options) {
-      this.title = options && options.title ? options.title : '标题'
-      this.content = options && options.content ? options.content : '提示语'
-      this.btns = options && options.btns ? options.btns : ['确定', '取消']
-      this.reject = options && options.reject ? options.reject : null
-      this.resolve = options && options.resolve ? options.resolve : null
-      this.isShow = true
+      this.title = options && options.title ? options.title : '标题';
+      this.content = options && options.content ? options.content : '提示语';
+      this.btns = options && options.btns ? options.btns : ['确定', '取消'];
+      this.reject = options && options.reject ? options.reject : null;
+      this.resolve = options && options.resolve ? options.resolve : null;
+      this.isShow = true;
     },
     hide () {
-      this.isShow = false
+      this.isShow = false;
     },
     cancel () {
-      this.reject()
-      this.hide()
+      this.reject();
+      this.hide();
     },
     sure () {
-      this.resolve()
-      this.hide()
+      this.resolve();
+      this.hide();
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

@@ -3,7 +3,7 @@ export const state = {
     name: '',
     sex: ''
   }
-}
+};
 
 export const mutations = {
   setPersonInfo (state, data) {
@@ -11,10 +11,10 @@ export const mutations = {
       state.personInfo = {
         ...state.personInfo,
         ...data
-      }
+      };
     }
   }
-}
+};
 export const actions = {
 
-}
+};

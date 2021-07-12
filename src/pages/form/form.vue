@@ -63,11 +63,11 @@
 </template>
 <script>
 // import ymHelloWord from '../../components/ym-hello-word/ym-hello-word.vue'
-import ymLabel from '../../components/ym-label/ym-label.vue'
-import ymSwitch from '../../components/ym-switch/ym-switch.vue'
-import ymCheckbox from '../../components/ym-checkbox/ym-checkbox.vue'
-import ymRadio from '../../components/ym-radio/ym-radio.vue'
-import ymSheet from '../../components/ym-sheet/ym-sheet.vue'
+import ymLabel from '../../components/ym-label/ym-label.vue';
+import ymSwitch from '../../components/ym-switch/ym-switch.vue';
+import ymCheckbox from '../../components/ym-checkbox/ym-checkbox.vue';
+import ymRadio from '../../components/ym-radio/ym-radio.vue';
+import ymSheet from '../../components/ym-sheet/ym-sheet.vue';
 export default{
   data () {
     return {
@@ -85,7 +85,7 @@ export default{
       radioDefaultValue: 1,
       isShow: false,
       sheetList: [{title: '选项1', value: 'val1'}, {title: '选项2', value: 'val2'}, {title: '选项3', value: 'val3'}]
-    }
+    };
   },
   components: {
     ymLabel,
@@ -96,33 +96,33 @@ export default{
   },
   computed: {
     showAddress () {
-      let province = this.provinceList.find(item => item.id === this.address.province) || {name: '选择省'}
-      let city = this.cityList.find(item => item.id === this.address.city) || {name: '选择市'}
-      return `${province.name} - ${city.name}`
+      let province = this.provinceList.find(item => item.id === this.address.province) || {name: '选择省'};
+      let city = this.cityList.find(item => item.id === this.address.city) || {name: '选择市'};
+      return `${province.name} - ${city.name}`;
     }
   },
   methods: {
     switchChange (e) {
-      console.log(e)
+      console.log(e);
     },
     getStore () {
-      console.log(this.$store.state.personInfo)
+      console.log(this.$store.state.personInfo);
     },
     changeRadio (data) {
-      this.radioDefaultValue = data
+      this.radioDefaultValue = data;
     },
     changeCheckbox (data) {
-      this.checkDefaultValue = data
+      this.checkDefaultValue = data;
     },
     showSheet () {
-      this.isShow = true
+      this.isShow = true;
     },
     clickSheet (data) {
-      console.log(data)
-      this.isShow = false
+      console.log(data);
+      this.isShow = false;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .center{

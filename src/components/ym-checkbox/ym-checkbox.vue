@@ -39,13 +39,13 @@ export default {
     selectList: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     defaultValue: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     selectName: {
@@ -63,16 +63,16 @@ export default {
   },
   methods: {
     handleClick (value) {
-      let selectedData = this.defaultValue
+      let selectedData = this.defaultValue;
       if (this.defaultValue.indexOf(value) >= 0) {
-        selectedData.splice(this.defaultValue.indexOf(value), 1)
+        selectedData.splice(this.defaultValue.indexOf(value), 1);
       } else {
-        selectedData.push(value)
+        selectedData.push(value);
       }
-      this.$emit('changeCheckbox', selectedData)
+      this.$emit('changeCheckbox', selectedData);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

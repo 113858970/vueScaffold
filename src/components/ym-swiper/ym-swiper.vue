@@ -51,7 +51,7 @@ export default {
       touchStart: {},
       touchEnd: {},
       intervalTime: ''
-    }
+    };
   },
   props: {
     height: {
@@ -65,13 +65,13 @@ export default {
           showDots: true,
           interval: 4000,
           autoplay: true
-        }
+        };
       }
     },
     imgList: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     effect: {
@@ -80,84 +80,84 @@ export default {
     }
   },
   mounted () {
-    this.calcWidth()
-    this.handleLoopMove()
+    this.calcWidth();
+    this.handleLoopMove();
   },
   methods: {
     calcWidth () {
       this.$nextTick(() => {
-        this.effect === 'normal' ? this.itemWidth = this.$refs.swiper.offsetWidth : this.itemWidth = this.$refs.swiper.offsetWidth - 40
-        this.handleType()
-        let length = this.imgList.length
-        this.ulStyle.width = parseInt((this.itemWidth + 40) * length) + 'px'
-      })
+        this.effect === 'normal' ? this.itemWidth = this.$refs.swiper.offsetWidth : this.itemWidth = this.$refs.swiper.offsetWidth - 40;
+        this.handleType();
+        let length = this.imgList.length;
+        this.ulStyle.width = parseInt((this.itemWidth + 40) * length) + 'px';
+      });
     },
     handleClick (val) {
-      this.$emit('onClickImg', val)
+      this.$emit('onClickImg', val);
     },
     handleType () {
-      this.effect === 'normal' ? this.ulStyle.paddingLeft = 0 : this.ulStyle.paddingLeft = '20px'
+      this.effect === 'normal' ? this.ulStyle.paddingLeft = 0 : this.ulStyle.paddingLeft = '20px';
     },
     handleMove () {
-      let moveX = this.itemWidth * this.index
+      let moveX = this.itemWidth * this.index;
       if (this.index === 0) {
-        moveX = 0
-        this.handleType()
+        moveX = 0;
+        this.handleType();
       } else {
-        this.ulStyle.paddingLeft = 0 // 将起始位置左侧的padding置为0
+        this.ulStyle.paddingLeft = 0; // 将起始位置左侧的padding置为0
         if (this.effect === 'zoom') {
-          moveX = moveX - 20
+          moveX = moveX - 20;
         }
       }
       this.swiperStyle = {
         transform: 'translateX(-' + moveX + 'px)'
-      }
+      };
     },
     handleLoopMove () {
       if (this.options.autoplay) {
-        let interval = this.options.interval ? this.options.interval : 3000
+        let interval = this.options.interval ? this.options.interval : 3000;
         this.intervalTime = setInterval(() => {
-          this.index++
+          this.index++;
           if (this.index > this.imgList.length - 1) {
-            this.index = 0
+            this.index = 0;
           }
-          this.handleMove()
-        }, interval)
+          this.handleMove();
+        }, interval);
       }
     },
     onTouchStart (e) {
-      this.touchStart = e.changedTouches[0]
-      clearInterval(this.intervalTime)
+      this.touchStart = e.changedTouches[0];
+      clearInterval(this.intervalTime);
     },
     onTouchEnd (e) {
-      this.touchEnd = e.changedTouches[0]
+      this.touchEnd = e.changedTouches[0];
       // 比较移动的点位差，正数就是右滑，负数就是左滑
       if (this.touchEnd.clientX - this.touchStart.clientX > 60) {
-        this.index--
+        this.index--;
         if (this.index <= 0) {
-          this.index = 0
+          this.index = 0;
         }
       } else if (this.touchEnd.clientX - this.touchStart.clientX < -60) {
-        this.index++
+        this.index++;
         if (this.index >= this.imgList.length - 1) {
-          this.index = this.imgList.length - 1
+          this.index = this.imgList.length - 1;
         }
       }
-      this.handleMove()
-      this.handleLoopMove()
+      this.handleMove();
+      this.handleLoopMove();
     }
   },
   watch: {
     imgList: (e) => {
-      this.calcWidth()
+      this.calcWidth();
     }
   },
   destroyed () {
     if (this.autoplay) {
-      clearInterval(this.intervalTime)
+      clearInterval(this.intervalTime);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .swiper-component {

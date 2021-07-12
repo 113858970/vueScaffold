@@ -29,20 +29,20 @@ export default {
   data () {
     return {
       isChecked: this.value
-    }
+    };
   },
   watch: {
     value (val) {
-      this.isChecked = val
+      this.isChecked = val;
     }
   },
   methods: {
     toggle () {
-      this.isChecked = !this.isChecked
-      this.$emit('switchChange', this.isChecked)
+      this.isChecked = !this.isChecked;
+      this.$emit('switchChange', this.isChecked);
     }
   }
-}
+};
 </script>
 <style>
 .switch {

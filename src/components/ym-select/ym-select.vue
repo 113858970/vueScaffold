@@ -67,25 +67,25 @@ export default {
     level1List: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     level2List: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     level3List: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     defaultValue: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     levelNumber: {
@@ -131,53 +131,53 @@ export default {
         level3Val: {}
       },
       isInit: true
-    }
+    };
   },
   watch: {
     level1Val () {
-      this.level2Val = this.level2List[0].value
-      this.level3Val = this.level3List[0].value
+      this.level2Val = this.level2List[0].value;
+      this.level3Val = this.level3List[0].value;
     },
     level2Val (value) {
-      this.level3Val = this.level3List[0].value
+      this.level3Val = this.level3List[0].value;
     }
   },
   updated () {
     if (this.$refs['wrapper']) {
       this.optionHeight = parseInt(
         this.$refs['wrapper'].children[0].offsetHeight
-      )
+      );
     }
-    this.val.level1Val = this.defaultValue[0] ? this.defaultValue[0] : {}
-    this.val.level2Val = this.defaultValue[1] ? this.defaultValue[1] : {}
-    this.val.level3Val = this.defaultValue[2] ? this.defaultValue[2] : {}
-    this.level1Val = this.defaultValue[0] ? this.defaultValue[0]['value'] : ''
-    this.level2Val = this.defaultValue[1] ? this.defaultValue[1]['value'] : ''
-    this.level3Val = this.defaultValue[2] ? this.defaultValue[2]['value'] : ''
+    this.val.level1Val = this.defaultValue[0] ? this.defaultValue[0] : {};
+    this.val.level2Val = this.defaultValue[1] ? this.defaultValue[1] : {};
+    this.val.level3Val = this.defaultValue[2] ? this.defaultValue[2] : {};
+    this.level1Val = this.defaultValue[0] ? this.defaultValue[0]['value'] : '';
+    this.level2Val = this.defaultValue[1] ? this.defaultValue[1]['value'] : '';
+    this.level3Val = this.defaultValue[2] ? this.defaultValue[2]['value'] : '';
     if (this.isInit) {
-      this.isInit = false
+      this.isInit = false;
       if (this.level1Val) {
         this.level1List.map((item, index) => {
           if (item.value === this.level1Val) {
-            this.level1Style.WebkitTransform = 'translate3d(0px,-' + index * this.optionHeight + 'px,0px)'
+            this.level1Style.WebkitTransform = 'translate3d(0px,-' + index * this.optionHeight + 'px,0px)';
           }
-        })
+        });
       }
       if (this.level2Val) {
         this.level2List.map((item, index) => {
           if (item.value === this.level2Val) {
             this.level2Style.WebkitTransform =
-            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)'
+            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)';
           }
-        })
+        });
       }
       if (this.level3Val) {
         this.level3List.map((item, index) => {
           if (item.value === this.level3Val) {
             this.level3Style.WebkitTransform =
-            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)'
+            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)';
           }
-        })
+        });
       }
     }
     this.level1Style.width =
@@ -185,31 +185,31 @@ export default {
         ? '100%'
         : this.levelNumber === 2
           ? '50%'
-          : '33.33%'
+          : '33.33%';
     this.level2Style.left =
-      this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
+      this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : '';
     this.level2Style.width =
-      this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
-    this.level3Style.left = this.levelNumber === 3 ? '66.66%' : ''
+      this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : '';
+    this.level3Style.left = this.levelNumber === 3 ? '66.66%' : '';
   },
   methods: {
     cancel () {
-      this.$emit('cancel', false)
+      this.$emit('cancel', false);
     },
     select () {
-      let selectValue = []
+      let selectValue = [];
       for (let i = 1; i <= this.levelNumber; i++) {
-        selectValue.push(this.val['level' + i + 'Val'])
+        selectValue.push(this.val['level' + i + 'Val']);
       }
-      this.$emit('select', selectValue)
+      this.$emit('select', selectValue);
     },
     // 滑动开始
     touchStart (e, val) {
-      e.preventDefault()
-      this.addSelect = false
-      this.addHeight = e.currentTarget.children[0].offsetHeight
-      this.maxScroll = this.addHeight * e.currentTarget.children.length
-      this.startTop = e.targetTouches[0].pageY
+      e.preventDefault();
+      this.addSelect = false;
+      this.addHeight = e.currentTarget.children[0].offsetHeight;
+      this.maxScroll = this.addHeight * e.currentTarget.children.length;
+      this.startTop = e.targetTouches[0].pageY;
       switch (val) {
         case 'level1':
           this.translateY = parseInt(
@@ -217,35 +217,35 @@ export default {
               this.level1Style.WebkitTransform.indexOf(',') + 1,
               this.level1Style.WebkitTransform.lastIndexOf(',')
             )
-          )
-          break
+          );
+          break;
         case 'level2':
           this.translateY = parseInt(
             this.level2Style.WebkitTransform.slice(
               this.level2Style.WebkitTransform.indexOf(',') + 1,
               this.level2Style.WebkitTransform.lastIndexOf(',')
             )
-          )
-          break
+          );
+          break;
         case 'level3':
           this.translateY = parseInt(
             this.level3Style.WebkitTransform.slice(
               this.level3Style.WebkitTransform.indexOf(',') + 1,
               this.level3Style.WebkitTransform.lastIndexOf(',')
             )
-          )
-          break
+          );
+          break;
         default:
-          break
+          break;
       }
     },
     // 滑动进行中
     touchMove (e, val) {
-      e.preventDefault()
+      e.preventDefault();
       switch (val) {
         case 'level1':
           if (e.targetTouches[0].pageY - this.startTop + this.translateY > 0) {
-            this.level1Style.WebkitTransform = 'translate3d(0px,0px,0px)'
+            this.level1Style.WebkitTransform = 'translate3d(0px,0px,0px)';
           } else if (
             e.targetTouches[0].pageY - this.startTop + this.translateY <
             -(this.maxScroll - this.addHeight)
@@ -253,17 +253,17 @@ export default {
             this.level1Style.WebkitTransform =
               'translate3d(0px,' +
               -(this.maxScroll - this.addHeight) +
-              'px,0px)'
+              'px,0px)';
           } else {
             this.level1Style.WebkitTransform =
               'translate3d(0px,' +
               (e.targetTouches[0].pageY - this.startTop + this.translateY) +
-              'px,0px)'
+              'px,0px)';
           }
-          break
+          break;
         case 'level2':
           if (e.targetTouches[0].pageY - this.startTop + this.translateY > 0) {
-            this.level2Style.WebkitTransform = 'translate3d(0px,0px,0px)'
+            this.level2Style.WebkitTransform = 'translate3d(0px,0px,0px)';
           } else if (
             e.targetTouches[0].pageY - this.startTop + this.translateY <
             -(this.maxScroll - this.addHeight)
@@ -271,17 +271,17 @@ export default {
             this.level2Style.WebkitTransform =
               'translate3d(0px,' +
               -(this.maxScroll - this.addHeight) +
-              'px,0px)'
+              'px,0px)';
           } else {
             this.level2Style.WebkitTransform =
               'translate3d(0px,' +
               (e.targetTouches[0].pageY - this.startTop + this.translateY) +
-              'px,0px)'
+              'px,0px)';
           }
-          break
+          break;
         case 'level3':
           if (e.targetTouches[0].pageY - this.startTop + this.translateY > 0) {
-            this.level3Style.WebkitTransform = 'translate3d(0px,0px,0px)'
+            this.level3Style.WebkitTransform = 'translate3d(0px,0px,0px)';
           } else if (
             e.targetTouches[0].pageY - this.startTop + this.translateY <
             -(this.maxScroll - this.addHeight)
@@ -289,22 +289,22 @@ export default {
             this.level3Style.WebkitTransform =
               'translate3d(0px,' +
               -(this.maxScroll - this.addHeight) +
-              'px,0px)'
+              'px,0px)';
           } else {
             this.level3Style.WebkitTransform =
               'translate3d(0px,' +
               (e.targetTouches[0].pageY - this.startTop + this.translateY) +
-              'px,0px)'
+              'px,0px)';
           }
-          break
+          break;
         default:
-          break
+          break;
       }
     },
     // 滑动结束
     touchEnd (e, val) {
-      e.preventDefault()
-      this.addSelect = true
+      e.preventDefault();
+      this.addSelect = true;
       switch (val) {
         case 'level1':
           let level1TranslateY = parseInt(
@@ -312,71 +312,71 @@ export default {
               this.level1Style.WebkitTransform.indexOf(',') + 1,
               this.level1Style.WebkitTransform.lastIndexOf(',')
             )
-          )
-          this.level1Index = -Math.round(level1TranslateY / this.addHeight)
+          );
+          this.level1Index = -Math.round(level1TranslateY / this.addHeight);
           this.level1Style.WebkitTransform =
             'translate3d(0px,' +
             Math.round(level1TranslateY / this.addHeight) * this.addHeight +
-            'px,0px)'
+            'px,0px)';
           this.level2Style.WebkitTransform = this.level3Style.WebkitTransform =
-            'translate3d(0px,0px,0px)'
-          this.level2Index = this.level3Index = 0
+            'translate3d(0px,0px,0px)';
+          this.level2Index = this.level3Index = 0;
           this.$emit('changeSelect', {
             level: 'level1',
             selectValue: this.level1List[this.level1Index].value
-          })
-          break
+          });
+          break;
         case 'level2':
           let level2TranslateY = parseInt(
             this.level2Style.WebkitTransform.slice(
               this.level2Style.WebkitTransform.indexOf(',') + 1,
               this.level2Style.WebkitTransform.lastIndexOf(',')
             )
-          )
-          this.level2Index = -Math.round(level2TranslateY / this.addHeight)
+          );
+          this.level2Index = -Math.round(level2TranslateY / this.addHeight);
           this.level2Style.WebkitTransform =
             'translate3d(0px,' +
             Math.round(level2TranslateY / this.addHeight) * this.addHeight +
-            'px,0px)'
-          this.level3Style.WebkitTransform = 'translate3d(0px,0px,0px)'
-          this.level3Index = 0
+            'px,0px)';
+          this.level3Style.WebkitTransform = 'translate3d(0px,0px,0px)';
+          this.level3Index = 0;
           this.$emit('changeSelect', {
             level: 'level2',
             selectValue: this.level2List[this.level2Index].value
-          })
-          break
+          });
+          break;
         case 'level3':
           let level3TranslateY = parseInt(
             this.level3Style.WebkitTransform.slice(
               this.level3Style.WebkitTransform.indexOf(',') + 1,
               this.level3Style.WebkitTransform.lastIndexOf(',')
             )
-          )
-          this.level3Index = -Math.round(level3TranslateY / this.addHeight)
+          );
+          this.level3Index = -Math.round(level3TranslateY / this.addHeight);
           this.level3Style.WebkitTransform =
             'translate3d(0px,' +
             Math.round(level3TranslateY / this.addHeight) * this.addHeight +
-            'px,0px)'
+            'px,0px)';
           this.$emit('changeSelect', {
             level: 'level3',
             selectValue: this.level3List[this.level3Index].value
-          })
-          break
+          });
+          break;
         default:
-          break
+          break;
       }
-      this.dataProcessing()
+      this.dataProcessing();
     },
     dataProcessing () {
-      this.val.level1Val = this.level1List[this.level1Index]
-      this.level1Val = this.level1List[this.level1Index].value
-      this.val.level2Val = this.level2List[this.level2Index]
-      this.level2Val = this.level2List[this.level2Index].value
-      this.val.level3Val = this.level3List[this.level3Index]
-      this.level3Val = this.level3List[this.level3Index].value
+      this.val.level1Val = this.level1List[this.level1Index];
+      this.level1Val = this.level1List[this.level1Index].value;
+      this.val.level2Val = this.level2List[this.level2Index];
+      this.level2Val = this.level2List[this.level2Index].value;
+      this.val.level3Val = this.level3List[this.level3Index];
+      this.level3Val = this.level3List[this.level3Index].value;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

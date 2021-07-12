@@ -10,10 +10,10 @@ export default {
   name: 'App',
   computed: {
     invalidRoute () {
-      return !this.$route.matched || this.$route.matched.length === 0
+      return !this.$route.matched || this.$route.matched.length === 0;
     }
   }
-}
+};
 </script>
 
 <style>

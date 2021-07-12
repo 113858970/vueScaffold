@@ -24,9 +24,9 @@ export default {
       isShow: false,
       text: '加载中',
       isShowBg: true
-    }
+    };
   }
-}
+};
 </script>
 <style lang="scss">
 .mask {

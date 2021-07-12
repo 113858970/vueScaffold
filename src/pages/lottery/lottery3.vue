@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { LuckyGrid, LuckyWheel } from 'vue-luck-draw'
+import { LuckyGrid, LuckyWheel } from 'vue-luck-draw';
 export default {
   data () {
     return {
@@ -44,20 +44,20 @@ export default {
         background: '#fff',
         shadow: ''
       }
-    }
+    };
   },
   components: {
     LuckyGrid,
     LuckyWheel
   },
   mounted () {
-    this.getPrizesList()
+    this.getPrizesList();
   },
   methods: {
     getPrizesList () {
-      const prizes = []
-      let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]]
-      let data = ['电热烘干毛巾架', '10元满减红包', '2积分', '胖喵焖烧罐', '5元满减红包', '多层置物架', '3元直减红包', '全场满99减10']
+      const prizes = [];
+      let axis = [[0, 0], [1, 0], [2, 0], [2, 1], [2, 2], [1, 2], [0, 2], [0, 1]];
+      let data = ['电热烘干毛巾架', '10元满减红包', '2积分', '胖喵焖烧罐', '5元满减红包', '多层置物架', '3元直减红包', '全场满99减10'];
       axis.forEach((item, index) => {
         prizes.push({
           x: item[0],
@@ -69,19 +69,19 @@ export default {
             src: require(`@/static/images/lottery/default-${index}.png`)
             // activeSrc: require(`@/static/images/lottery/default-${index}.png`)
           }]
-        })
-      })
-      this.prizes = prizes
+        });
+      });
+      this.prizes = prizes;
     },
     startCallBack () {
-      this.$refs.LuckDraw.play()
+      this.$refs.LuckDraw.play();
       setTimeout(() => {
-        this.$refs.LuckDraw.stop(Math.random() * 8 >> 0)
-      }, 2000)
+        this.$refs.LuckDraw.stop(Math.random() * 8 >> 0);
+      }, 2000);
     },
     endCallBack (prize) {
-      alert(`恭喜你获得大奖: ${prize.title}`)
+      alert(`恭喜你获得大奖: ${prize.title}`);
     }
   }
-}
+};
 </script>

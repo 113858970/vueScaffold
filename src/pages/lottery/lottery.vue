@@ -40,7 +40,7 @@
   stop(index) 缓慢停止抽奖 （调用该方法时，才会缓慢停止, 参数是中奖的索引；如果stop方法传入-1, 那游戏立即停止, 并且end回调不会触发）
 */
 
-import { LuckyGrid, LuckyWheel } from 'vue-luck-draw'
+import { LuckyGrid, LuckyWheel } from 'vue-luck-draw';
 export default{
   data () {
     return {
@@ -64,40 +64,40 @@ export default{
           ]
         }
       ]
-    }
+    };
   },
   components: {
     LuckyGrid,
     LuckyWheel
   },
   mounted () {
-    this.getPrizesList()
+    this.getPrizesList();
   },
   methods: {
     getPrizesList () {
-      const prizes = []
-      let data = ['1元红包', '100元红包', '0.5元红包', '2元红包', '10元红包', '50元红包', '0.3元红包', '5元红包']
+      const prizes = [];
+      let data = ['1元红包', '100元红包', '0.5元红包', '2元红包', '10元红包', '50元红包', '0.3元红包', '5元红包'];
       data.forEach((item, index) => {
         prizes.push({
           name: item,
           background: index % 2 ? '#f9e3bb' : '#f8d384',
           fonts: [{ text: item, top: '10%' }],
           imgs: [{src: 'https://wx1.sinaimg.cn/mw2000/004gMxWJly8gmcn83wccpj608c08c0uc02.jpg', width: '30%', height: '30%', top: '40%'}]
-        })
-      })
-      this.prizes = prizes
+        });
+      });
+      this.prizes = prizes;
     },
     startCallBack () {
-      this.$refs.LuckyWheel.play()
+      this.$refs.LuckyWheel.play();
       setTimeout(() => {
-        this.$refs.LuckyWheel.stop(2)
-      }, 3000)
+        this.$refs.LuckyWheel.stop(2);
+      }, 3000);
     },
     endCallBack (prize) {
-      alert(`恭喜你获得${prize.name}`)
+      alert(`恭喜你获得${prize.name}`);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 

@@ -33,7 +33,7 @@ export default {
     radioList: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     defaultValue: '',
@@ -52,10 +52,10 @@ export default {
   },
   methods: {
     handleClick (value) {
-      this.$emit('changeRadio', value)
+      this.$emit('changeRadio', value);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

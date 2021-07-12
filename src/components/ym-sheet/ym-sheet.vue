@@ -31,7 +31,7 @@ export default {
     sheetList: {
       type: Array,
       default: () => {
-        return []
+        return [];
       }
     },
     sheetName: {
@@ -41,13 +41,13 @@ export default {
   },
   methods: {
     cancel () {
-      this.$emit('clickSheet', {})
+      this.$emit('clickSheet', {});
     },
     selectSheet (index) {
-      this.$emit('clickSheet', this.sheetList[index])
+      this.$emit('clickSheet', this.sheetList[index]);
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .sheet {

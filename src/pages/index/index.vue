@@ -24,10 +24,10 @@
     </div>
 </template>
 <script>
-import ymSwiper from '../../components/ym-swiper/ym-swiper.vue'
-import ymSelect from '../../components/ym-select/ym-select.vue'
-import ymPopupDialog from '../../components/ym-popup-dialog/ym-popup-dialog.vue'
-import { apiProtocol, apiLogin } from '@/api/api'
+import ymSwiper from '../../components/ym-swiper/ym-swiper.vue';
+import ymSelect from '../../components/ym-select/ym-select.vue';
+import ymPopupDialog from '../../components/ym-popup-dialog/ym-popup-dialog.vue';
+import { apiProtocol, apiLogin } from '@/api/api';
 export default{
   data () {
     return {
@@ -49,7 +49,7 @@ export default{
       level3List: [{ name: '请选择', value: '' }],
       defaultValue: [{ name: '2', value: '2' }, { name: '21', value: '21' }],
       isSelectShow: false
-    }
+    };
   },
   components: {
     ymSwiper,
@@ -57,43 +57,43 @@ export default{
     ymSelect
   },
   mounted () {
-    this.$toast({title: '1232'})
+    this.$toast({title: '1232'});
     this.$showLoading({
       text: 'asad'
-    })
+    });
     apiProtocol({type: 1000}).then(res => {
       // 获取数据成功后的其他操作
-      console.log(res)
-    })
+      console.log(res);
+    });
     apiLogin({
       email: '2222@qq.com',
       password: 123456
     }).then(res => {
-      console.log(res)
-    })
+      console.log(res);
+    });
   },
   methods: {
     setStore () {
       this.$store.commit('setPersonInfo', {
         name: 'abc',
         sex: '1'
-      })
+      });
     },
     loadingShow () {
-      this.$refs.loading.show()
+      this.$refs.loading.show();
     },
     dialogShow () {
       this.$refs.dialog.show({
         reject: () => {
-          console.log('reject')
+          console.log('reject');
         },
         resolve: () => {
-          console.log('resolve')
+          console.log('resolve');
         }
-      })
+      });
     },
     handleSwiperClick (data) {
-      console.log(data)
+      console.log(data);
     },
     changeSelect (data) {
       if (data.level === 'level1') {
@@ -104,11 +104,11 @@ export default{
             { name: '21', value: '21' },
             { name: '31', value: '31' },
             { name: '41', value: '41' }
-          ]
+          ];
         } else {
-          this.level2List = [{ name: '请选择', value: '' }]
+          this.level2List = [{ name: '请选择', value: '' }];
         }
-        this.level3List = [{ name: '请选择', value: '' }]
+        this.level3List = [{ name: '请选择', value: '' }];
       } else if (data.level === 'level2') {
         if (data.selectValue) {
           this.level3List = [
@@ -117,24 +117,24 @@ export default{
             { name: '211', value: '211' },
             { name: '311', value: '311' },
             { name: '411', value: '411' }
-          ]
+          ];
         } else {
-          this.level3List = [{ name: '请选择', value: '' }]
+          this.level3List = [{ name: '请选择', value: '' }];
         }
       }
     },
     selectShow () {
-      this.isSelectShow = true
+      this.isSelectShow = true;
     },
     select (data) {
-      this.isSelectShow = false
-      this.defaultValue = data
+      this.isSelectShow = false;
+      this.defaultValue = data;
     },
     cancel () {
-      this.isSelectShow = false
+      this.isSelectShow = false;
     }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 .swiper{

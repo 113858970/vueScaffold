@@ -6,7 +6,6 @@
         <p @click="loadingShow">loading</p>
         <p @click="dialogShow">dialog</p>
         <p @click="selectShow">select</p>
-        <ym-loading ref="loading" text="加载中"/>
         <ym-popup-dialog ref = 'dialog'/>
         <!-- <div class="swiper">
           <ym-swiper height="10rem"  :imgList="imgs" effect="normal" @onClickImg="handleSwiperClick"></ym-swiper>
@@ -58,6 +57,10 @@ export default{
     ymSelect
   },
   mounted () {
+    this.$toast({title: '1232'})
+    this.$showLoading({
+      text: 'asad'
+    })
     apiProtocol({type: 1000}).then(res => {
       // 获取数据成功后的其他操作
       console.log(res)

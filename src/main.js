@@ -3,12 +3,13 @@ import App from './App'
 import router from './router'
 import store from '@/store'
 import toast from '@/plugins/toast'
-import ymLoading from '@/components/ym-loading/ym-loading.vue'
+import loading from '@/plugins/loading'
 Vue.config.productionTip = false
 Vue.use(toast)
+Vue.use(loading)
+
 Vue.prototype.$store = store
 
-Vue.component('ym-loading', ymLoading)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

@@ -1,12 +1,7 @@
 import axios from 'axios'
+import env from '@/configs/env.js'
 
-// 环境的切换
-if (process.env.NODE_ENV === 'development') {
-  axios.defaults.baseURL = 'https://twin-ui.com/demo/'
-} else if (process.env.NODE_ENV === 'production') {
-  axios.defaults.baseURL = 'https://twin-ui.com/demo/'
-}
-
+axios.defaults.baseURL = env.url
 // 请求超时时间
 axios.defaults.timeout = 10000
 

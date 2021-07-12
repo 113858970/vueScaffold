@@ -5,14 +5,14 @@ export default (Vue) => {
     let toastDom = new ToastComp({
       data () {
         return {
-          show: true,
+          isShow: true,
           title
         }
       }
     }).$mount(document.createElement('div'))
     document.body.appendChild(toastDom.$el)
     setTimeout(() => {
-      toastDom.show = false
+      toastDom.isShow = false
     }, duration)
   }
   Vue.prototype.$toast = showToast

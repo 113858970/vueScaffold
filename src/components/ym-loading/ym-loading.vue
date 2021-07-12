@@ -19,25 +19,11 @@
 </template>
 <script>
 export default {
-  props: {
-    text: {
-      default: '加载中',
-      type: String
-    }
-  },
   data () {
     return {
       isShow: false,
+      text: '加载中',
       isShowBg: true
-    }
-  },
-  methods: {
-    show (isShowBg = true) {
-      this.isShow = true
-      this.isShowBg = isShowBg
-    },
-    hide () {
-      this.isShow = false
     }
   }
 }

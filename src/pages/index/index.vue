@@ -5,6 +5,7 @@
         <p><router-link to="/lottery">lottery</router-link></p>
         <p @click="loadingShow">loading</p>
         <p @click="dialogShow">dialog</p>
+        <p @click="selectShow">select</p>
         <ym-loading ref="loading" text="加载中"/>
         <ym-popup-dialog ref = 'dialog'/>
         <!-- <div class="swiper">
@@ -18,7 +19,8 @@
           @changeSelect="changeSelect"
           @select="select"
           @cancel="cancel"
-          :levelNumber="1"
+          :levelNumber="2"
+          :isSelectShow="isSelectShow"
         ></ym-select>
     </div>
 </template>
@@ -26,6 +28,7 @@
 import ymSwiper from '../../components/ym-swiper/ym-swiper.vue'
 import ymSelect from '../../components/ym-select/ym-select.vue'
 import ymPopupDialog from '../../components/ym-popup-dialog/ym-popup-dialog.vue'
+import { apiProtocol, apiLogin } from '@/api/api'
 export default{
   data () {
     return {
@@ -37,15 +40,34 @@ export default{
         { name: '3', value: '3' },
         { name: '4', value: '4' }
       ],
-      level2List: [{ name: '请选择', value: '' }],
+      level2List: [
+        { name: '请选择', value: '' },
+        { name: '11', value: '11' },
+        { name: '21', value: '21' },
+        { name: '31', value: '31' },
+        { name: '41', value: '41' }
+      ],
       level3List: [{ name: '请选择', value: '' }],
-      defaultValue: []
+      defaultValue: [{ name: '2', value: '2' }, { name: '21', value: '21' }],
+      isSelectShow: false
     }
   },
   components: {
     ymSwiper,
     ymPopupDialog,
     ymSelect
+  },
+  mounted () {
+    apiProtocol({type: 1000}).then(res => {
+      // 获取数据成功后的其他操作
+      console.log(res)
+    })
+    apiLogin({
+      email: '2222@qq.com',
+      password: 123456
+    }).then(res => {
+      console.log(res)
+    })
   },
   methods: {
     setStore () {
@@ -98,11 +120,15 @@ export default{
         }
       }
     },
+    selectShow () {
+      this.isSelectShow = true
+    },
     select (data) {
-      console.log(data)
+      this.isSelectShow = false
+      this.defaultValue = data
     },
     cancel () {
-
+      this.isSelectShow = false
     }
   }
 }

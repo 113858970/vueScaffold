@@ -1,5 +1,5 @@
 <template>
-  <div class="select">
+  <div class="select" v-if="isSelectShow">
     <div class="select-bg" @click="cancel"></div>
     <div class="select-box">
       <p class="select-btn">
@@ -91,6 +91,10 @@ export default {
     levelNumber: {
       type: Number,
       default: 3
+    },
+    isSelectShow: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -125,11 +129,12 @@ export default {
         level1Val: {},
         level2Val: {},
         level3Val: {}
-      }
+      },
+      isInit: true
     }
   },
   watch: {
-    level1Val (value) {
+    level1Val () {
       this.level2Val = this.level2List[0].value
       this.level3Val = this.level3List[0].value
     },
@@ -137,58 +142,64 @@ export default {
       this.level3Val = this.level3List[0].value
     }
   },
-  mounted () {
-    this.optionHeight = parseInt(this.$refs['wrapper'].children[0].offsetHeight)
+  updated () {
+    if (this.$refs['wrapper']) {
+      this.optionHeight = parseInt(
+        this.$refs['wrapper'].children[0].offsetHeight
+      )
+    }
     this.val.level1Val = this.defaultValue[0] ? this.defaultValue[0] : {}
     this.val.level2Val = this.defaultValue[1] ? this.defaultValue[1] : {}
     this.val.level3Val = this.defaultValue[2] ? this.defaultValue[2] : {}
     this.level1Val = this.defaultValue[0] ? this.defaultValue[0]['value'] : ''
     this.level2Val = this.defaultValue[1] ? this.defaultValue[1]['value'] : ''
     this.level3Val = this.defaultValue[2] ? this.defaultValue[2]['value'] : ''
-    if (this.level1Val) {
-      this.level1List.map((item, index) => {
-        if (item.value === this.level1Val) {
-          this.level1Style.WebkitTransform =
-              'translate3d(0px,-' +
-              (index * this.optionHeight) +
-              'px,0px)'
-        }
-      })
+    if (this.isInit) {
+      this.isInit = false
+      if (this.level1Val) {
+        this.level1List.map((item, index) => {
+          if (item.value === this.level1Val) {
+            this.level1Style.WebkitTransform = 'translate3d(0px,-' + index * this.optionHeight + 'px,0px)'
+          }
+        })
+      }
+      if (this.level2Val) {
+        this.level2List.map((item, index) => {
+          if (item.value === this.level2Val) {
+            this.level2Style.WebkitTransform =
+            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)'
+          }
+        })
+      }
+      if (this.level3Val) {
+        this.level3List.map((item, index) => {
+          if (item.value === this.level3Val) {
+            this.level3Style.WebkitTransform =
+            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)'
+          }
+        })
+      }
     }
-    if (this.level2Val) {
-      this.level2List.map((item, index) => {
-        if (item.value === this.level2Val) {
-          this.level2Style.WebkitTransform =
-              'translate3d(0px,-' +
-              (index * this.optionHeight) +
-              'px,0px)'
-        }
-      })
-    }
-    if (this.level3Val) {
-      this.level3List.map((item, index) => {
-        if (item.value === this.level3Val) {
-          this.level3Style.WebkitTransform =
-              'translate3d(0px,-' +
-              (index * this.optionHeight) +
-              'px,0px)'
-        }
-      })
-    }
-    this.level1Style.width = this.levelNumber === 1 ? '100%' : this.levelNumber === 2 ? '50%' : '33.33%'
-    this.level2Style.left = this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
-    this.level2Style.width = this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
+    this.level1Style.width =
+      this.levelNumber === 1
+        ? '100%'
+        : this.levelNumber === 2
+          ? '50%'
+          : '33.33%'
+    this.level2Style.left =
+      this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
+    this.level2Style.width =
+      this.levelNumber === 2 ? '50%' : this.levelNumber === 3 ? '33.33%' : ''
     this.level3Style.left = this.levelNumber === 3 ? '66.66%' : ''
-    console.log(this.level1Style)
   },
   methods: {
     cancel () {
       this.$emit('cancel', false)
     },
     select () {
-      let selectValue = {}
+      let selectValue = []
       for (let i = 1; i <= this.levelNumber; i++) {
-        selectValue['level' + i + 'Val'] = this.val['level' + i + 'Val']
+        selectValue.push(this.val['level' + i + 'Val'])
       }
       this.$emit('select', selectValue)
     },
@@ -310,7 +321,10 @@ export default {
           this.level2Style.WebkitTransform = this.level3Style.WebkitTransform =
             'translate3d(0px,0px,0px)'
           this.level2Index = this.level3Index = 0
-          this.$emit('changeSelect', {'level': 'level1', 'selectValue': this.level1List[this.level1Index].value})
+          this.$emit('changeSelect', {
+            level: 'level1',
+            selectValue: this.level1List[this.level1Index].value
+          })
           break
         case 'level2':
           let level2TranslateY = parseInt(
@@ -326,7 +340,10 @@ export default {
             'px,0px)'
           this.level3Style.WebkitTransform = 'translate3d(0px,0px,0px)'
           this.level3Index = 0
-          this.$emit('changeSelect', {'level': 'level2', 'selectValue': this.level2List[this.level2Index].value})
+          this.$emit('changeSelect', {
+            level: 'level2',
+            selectValue: this.level2List[this.level2Index].value
+          })
           break
         case 'level3':
           let level3TranslateY = parseInt(
@@ -340,7 +357,10 @@ export default {
             'translate3d(0px,' +
             Math.round(level3TranslateY / this.addHeight) * this.addHeight +
             'px,0px)'
-          this.$emit('changeSelect', {'level': 'level3', 'selectValue': this.level3List[this.level3Index].value})
+          this.$emit('changeSelect', {
+            level: 'level3',
+            selectValue: this.level3List[this.level3Index].value
+          })
           break
         default:
           break
@@ -444,6 +464,6 @@ export default {
   }
 }
 .select-ani {
-  transition: 0.8s;
+  transition: 0.2s;
 }
 </style>

@@ -10,7 +10,6 @@ module.exports = {
     'plugin:vue/essential', 
     'standard'
   ],
-  // required to lint *.vue files
   plugins: [
     'vue'
   ],

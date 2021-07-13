@@ -57,17 +57,17 @@ export default{
     ymSelect
   },
   mounted () {
-    this.$toast({title: '1232'});
-    this.$showLoading({
-      text: 'asad'
-    });
+    // this.$toast({title: '1232'});
+    // this.$showLoading({
+    //   text: 'asad'
+    // });
     apiProtocol({type: 1000}).then(res => {
       // 获取数据成功后的其他操作
       console.log(res);
     });
     apiLogin({
       email: '2222@qq.com',
-      password: 123456
+      password: '123456'
     }).then(res => {
       console.log(res);
     });

@@ -14,7 +14,6 @@
           @touchmove="touchMove($event, 'level1')"
           @touchend="touchEnd($event, 'level1')"
           :style="level1Style"
-          :class="[{ 'select-ani': addSelect }]"
         >
           <li
             v-for="(item, index) in level1List"
@@ -29,7 +28,6 @@
           @touchmove="touchMove($event, 'level2')"
           @touchend="touchEnd($event, 'level2')"
           :style="level2Style"
-          :class="[{ 'select-ani': addSelect }]"
           v-if="levelNumber > 1"
         >
           <li
@@ -45,7 +43,6 @@
           @touchmove="touchMove($event, 'level3')"
           @touchend="touchEnd($event, 'level3')"
           :style="level3Style"
-          :class="[{ 'select-ani': addSelect }]"
           v-if="levelNumber > 2"
         >
           <li
@@ -117,11 +114,9 @@ export default {
       level1Index: 0,
       level2Index: 0,
       level3Index: 0,
-      translateY: 0,
-      maxScroll: 0,
-      addHeight: 0,
-      addSelect: false,
-      optionHeight: 0,
+      translateY: 0, // 移动距离
+      maxScroll: 0, // 最大移动距离
+      addHeight: 0, // 选择项高度
       level1Val: '',
       level2Val: '',
       level3Val: '',
@@ -144,8 +139,8 @@ export default {
   },
   updated () {
     if (this.$refs['wrapper']) {
-      this.optionHeight = parseInt(
-        this.$refs['wrapper'].children[0].offsetHeight
+      this.addHeight = parseInt(
+        this.$refs['wrapper'].children[0].offsetHeight - 1
       );
     }
     this.val.level1Val = this.defaultValue[0] ? this.defaultValue[0] : {};
@@ -159,7 +154,7 @@ export default {
       if (this.level1Val) {
         this.level1List.map((item, index) => {
           if (item.value === this.level1Val) {
-            this.level1Style.WebkitTransform = 'translate3d(0px,-' + index * this.optionHeight + 'px,0px)';
+            this.level1Style.WebkitTransform = 'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
           }
         });
       }
@@ -167,7 +162,7 @@ export default {
         this.level2List.map((item, index) => {
           if (item.value === this.level2Val) {
             this.level2Style.WebkitTransform =
-            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)';
+            'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
           }
         });
       }
@@ -175,7 +170,7 @@ export default {
         this.level3List.map((item, index) => {
           if (item.value === this.level3Val) {
             this.level3Style.WebkitTransform =
-            'translate3d(0px,-' + index * this.optionHeight + 'px,0px)';
+            'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
           }
         });
       }
@@ -206,10 +201,8 @@ export default {
     // 滑动开始
     touchStart (e, val) {
       e.preventDefault();
-      this.addSelect = false;
-      this.addHeight = e.currentTarget.children[0].offsetHeight;
       this.maxScroll = this.addHeight * e.currentTarget.children.length;
-      this.startTop = e.targetTouches[0].pageY;
+      this.startTop = e.targetTouches[0].pageY; // 触摸目标在页面中的y坐标
       switch (val) {
         case 'level1':
           this.translateY = parseInt(
@@ -304,7 +297,6 @@ export default {
     // 滑动结束
     touchEnd (e, val) {
       e.preventDefault();
-      this.addSelect = true;
       switch (val) {
         case 'level1':
           let level1TranslateY = parseInt(
@@ -369,11 +361,11 @@ export default {
     },
     dataProcessing () {
       this.val.level1Val = this.level1List[this.level1Index];
-      this.level1Val = this.level1List[this.level1Index].value;
+      this.level1Val = this.level1List[this.level1Index] ? this.level1List[this.level1Index].value : '';
       this.val.level2Val = this.level2List[this.level2Index];
-      this.level2Val = this.level2List[this.level2Index].value;
+      this.level2Val = this.level2List[this.level2Index] ? this.level2List[this.level2Index].value : '';
       this.val.level3Val = this.level3List[this.level3Index];
-      this.level3Val = this.level3List[this.level3Index].value;
+      this.level3Val = this.level3List[this.level3Index] ? this.level3List[this.level3Index].value : '';
     }
   }
 };

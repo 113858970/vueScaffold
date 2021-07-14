@@ -143,34 +143,44 @@ export default {
         this.$refs['wrapper'].children[0].offsetHeight - 1
       );
     }
-    this.val.level1Val = this.defaultValue[0] ? this.defaultValue[0] : {};
-    this.val.level2Val = this.defaultValue[1] ? this.defaultValue[1] : {};
-    this.val.level3Val = this.defaultValue[2] ? this.defaultValue[2] : {};
-    this.level1Val = this.defaultValue[0] ? this.defaultValue[0]['value'] : '';
-    this.level2Val = this.defaultValue[1] ? this.defaultValue[1]['value'] : '';
-    this.level3Val = this.defaultValue[2] ? this.defaultValue[2]['value'] : '';
     if (this.isInit) {
       this.isInit = false;
+      this.val.level1Val = this.defaultValue[0] ? this.defaultValue[0] : {};
+      this.val.level2Val = this.defaultValue[1] ? this.defaultValue[1] : {};
+      this.val.level3Val = this.defaultValue[2] ? this.defaultValue[2] : {};
+      this.level1Val = this.defaultValue[0]
+        ? this.defaultValue[0]['value']
+        : '';
+      this.level2Val = this.defaultValue[1]
+        ? this.defaultValue[1]['value']
+        : '';
+      this.level3Val = this.defaultValue[2]
+        ? this.defaultValue[2]['value']
+        : '';
       if (this.level1Val) {
         this.level1List.map((item, index) => {
           if (item.value === this.level1Val) {
-            this.level1Style.WebkitTransform = 'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
+            this.level1Index = index;
+            this.level1Style.WebkitTransform =
+              'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
           }
         });
       }
       if (this.level2Val) {
         this.level2List.map((item, index) => {
           if (item.value === this.level2Val) {
+            this.level2Index = index;
             this.level2Style.WebkitTransform =
-            'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
+              'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
           }
         });
       }
       if (this.level3Val) {
         this.level3List.map((item, index) => {
           if (item.value === this.level3Val) {
+            this.level3Index = index;
             this.level3Style.WebkitTransform =
-            'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
+              'translate3d(0px,-' + index * this.addHeight + 'px,0px)';
           }
         });
       }
@@ -196,7 +206,6 @@ export default {
       for (let i = 1; i <= this.levelNumber; i++) {
         selectValue.push(this.val['level' + i + 'Val']);
       }
-      console.log(selectValue);
       this.$emit('select', selectValue);
     },
     // 滑动开始
@@ -362,11 +371,17 @@ export default {
     },
     dataProcessing () {
       this.val.level1Val = this.level1List[this.level1Index];
-      this.level1Val = this.level1List[this.level1Index] ? this.level1List[this.level1Index].value : '';
+      this.level1Val = this.level1List[this.level1Index]
+        ? this.level1List[this.level1Index].value
+        : '';
       this.val.level2Val = this.level2List[this.level2Index];
-      this.level2Val = this.level2List[this.level2Index] ? this.level2List[this.level2Index].value : '';
+      this.level2Val = this.level2List[this.level2Index]
+        ? this.level2List[this.level2Index].value
+        : '';
       this.val.level3Val = this.level3List[this.level3Index];
-      this.level3Val = this.level3List[this.level3Index] ? this.level3List[this.level3Index].value : '';
+      this.level3Val = this.level3List[this.level3Index]
+        ? this.level3List[this.level3Index].value
+        : '';
     }
   }
 };

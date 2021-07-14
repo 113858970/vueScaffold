@@ -1,18 +1,16 @@
 <template>
   <div class="sheet" @click="cancel" v-if="isShow">
-    <transition name="sheetTransition">
-      <div class="sheet-box">
-        <div
-          class="sheet-data"
-          v-for="(item, index) in sheetList"
-          :key="index"
-          @click.stop="selectSheet(index)"
-        >
-          {{ item[sheetName] }}
-        </div>
-        <div class="sheet-data sheet-cancel" @click.stop="cancel">取消</div>
+    <div class="sheet-box">
+      <div
+        class="sheet-data"
+        v-for="(item, index) in sheetList"
+        :key="index"
+        @click.stop="selectSheet(index)"
+      >
+        {{ item[sheetName] }}
       </div>
-    </transition>
+      <div class="sheet-data sheet-cancel" @click.stop="cancel">取消</div>
+    </div>
   </div>
 </template>
 <script>

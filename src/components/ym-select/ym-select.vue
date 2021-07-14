@@ -196,6 +196,7 @@ export default {
       for (let i = 1; i <= this.levelNumber; i++) {
         selectValue.push(this.val['level' + i + 'Val']);
       }
+      console.log(selectValue);
       this.$emit('select', selectValue);
     },
     // 滑动开始

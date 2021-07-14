@@ -96,6 +96,7 @@ export default{
       border: 1px solid #DA0605;
       text-align: center;
       border-radius: .5rem;
+      font-weight: bold;
     }
     .btn1{
       color: #DA0605;

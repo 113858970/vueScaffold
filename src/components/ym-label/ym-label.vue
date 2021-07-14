@@ -3,7 +3,7 @@
     :class="{ label: true, borderBottom: borderBottom }"
     :style="{ minHeight: height }"
   >
-    <p>{{ title }}</p>
+    <p class="label-p">{{ title }}</p>
     <slot></slot>
   </div>
 </template>
@@ -34,6 +34,7 @@ export default {
   align-items: center;
   justify-content: space-between;
   margin: 0 0.4rem 0.2rem;
+  text-align: right;
   input,
   textarea {
     border: none;
@@ -42,7 +43,8 @@ export default {
   textarea:focus {
     outline: none;
   }
-  p{
+  .label-p{
+    text-align: left;
     min-width: 30%;
   }
 }

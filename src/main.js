@@ -6,7 +6,6 @@ import toast from '@/plugins/toast';
 import loading from '@/plugins/loading';
 Vue.config.productionTip = false;
 Vue.use(toast);
-
 Vue.use(loading);
 
 Vue.prototype.$store = store;

@@ -1,90 +1,79 @@
 <template>
-    <div>
-      <p class="center">{{title}}</p>
-      <div class="box">
-        <ymLabel :title="'姓名'">
-          <p>我的姓名</p>
-        </ymLabel>
-        <ymLabel :title="'性别'">
-          <ymSwitch :value="switchValue" @switchChange="switchChange" :bgBackground="bgBackground"></ymSwitch>
-        </ymLabel>
-        <ymLabel :title="'input框'">
-          <input class="formInput"/>
-        </ymLabel>
-        <ymLabel :title="'textarea框'">
-          <textarea class="formInput"/>
-        </ymLabel>
-        <ymLabel :title="'radio'">
-          <ymRadio
-            :radioList='selectList'
-            :defaultValue="radioDefaultValue"
-            @changeRadio = "changeRadio"
-          />
-        </ymLabel>
-        <ymLabel :title="'checkbox'">
-          <ymCheckbox
-            :selectList='selectList'
-            :defaultValue="checkDefaultValue"
-            @changeCheckbox = "changeCheckbox"
-          />
-        </ymLabel>
-        <ymLabel :title="'checkbox'" :borderBottom="false">
-          <select>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-          </select>
-        </ymLabel>
-        <ymLabel :title="'input框'">
-          <input class="formInput"/>
-        </ymLabel>
-        <ymLabel :title="'input框'">
-          <input class="formInput"/>
-        </ymLabel>
-        <ymLabel :title="'input框'">
-          <input class="formInput"/>
-        </ymLabel>
-        <ymLabel :title="'input框'">
-          <input class="formInput"/>
-        </ymLabel>
-        <ymLabel :title="'input框'">
-          <input class="formInput"/>
-        </ymLabel>
-      </div>
-      <p @click="showSheet">sheet</p>
-      <ymSheet
-        :isShow="isShow"
-        :sheetList="sheetList"
-        :sheetName = "'title'"
-        @clickSheet = "clickSheet"
-      />
-      <div class="btn">提 交</div>
+    <div class="box">
+      <ymLabel :title="'姓名'">
+        <p>我的姓名</p>
+      </ymLabel>
+      <ymLabel :title="'switch'">
+        <ymSwitch :value="switchValue" @switchChange="switchChange" :bgBackground="switchBackground"></ymSwitch>
+      </ymLabel>
+      <ymLabel :title="'input框'">
+        <input class="formInput"/>
+      </ymLabel>
+      <ymLabel :title="'textarea框'">
+        <textarea class="formInput"/>
+      </ymLabel>
+      <ymLabel :title="'radio'">
+        <ymRadio
+          :radioList='selectList'
+          :defaultValue="radioDefaultValue"
+          @changeRadio = "changeRadio"
+        />
+      </ymLabel>
+      <ymLabel :title="'checkbox'">
+        <ymCheckbox
+          :selectList='selectList'
+          :defaultValue="checkDefaultValue"
+          @changeCheckbox = "changeCheckbox"
+        />
+      </ymLabel>
+      <ymLabel :title="'select'" :borderBottom="false">
+        <p @click="selectShow">{{selectValueString}}</p>
+      </ymLabel>
+      <ym-select
+          :level1List="level1List"
+          :level2List="level2List"
+          :level3List="level3List"
+          :defaultValue="selectDefaultValue"
+          @changeSelect="changeSelect"
+          @select="select"
+          @cancel="cancel"
+          :levelNumber="2"
+          :isSelectShow="isSelectShow"
+        ></ym-select>
     </div>
 </template>
 <script>
-// import ymHelloWord from '../../components/ym-hello-word/ym-hello-word.vue'
 import ymLabel from '../../components/ym-label/ym-label.vue';
 import ymSwitch from '../../components/ym-switch/ym-switch.vue';
 import ymCheckbox from '../../components/ym-checkbox/ym-checkbox.vue';
 import ymRadio from '../../components/ym-radio/ym-radio.vue';
-import ymSheet from '../../components/ym-sheet/ym-sheet.vue';
+import ymSelect from '../../components/ym-select/ym-select.vue';
 export default{
   data () {
     return {
-      title: 'form',
       switchValue: true,
-      bgBackground: '#1da1f2',
-      address: {
-        province: '',
-        city: ''
-      },
-      provinceList: [{id: 1, name: '1'}, {id: 2, name: '2'}, {id: 3, name: '3'}, {id: 4, name: '4'}, {id: 5, name: '5'}, {id: 6, name: '6'}],
-      cityList: [{id: 11, name: '11'}, {id: 22, name: '22'}, {id: 31, name: '31'}, {id: 41, name: '41'}, {id: 51, name: '51'}, {id: 61, name: '66'}],
-      selectList: [{value: 1, name: '选项1'}, {value: 2, name: '选项2'}, {value: 3, name: '选项1'}, {value: 4, name: '选项2'}, {value: 5, name: '选项1'}, {value: 6, name: '选项2'}],
+      switchBackground: '#1da1f2',
       checkDefaultValue: [1],
       radioDefaultValue: 1,
-      isShow: false,
-      sheetList: [{title: '选项1', value: 'val1'}, {title: '选项2', value: 'val2'}, {title: '选项3', value: 'val3'}]
+      selectList: [{value: 1, name: '选项1'}, {value: 2, name: '选项2'}, {value: 3, name: '选项3'}],
+      level1List: [
+        { name: '请选择', value: '' },
+        { name: '1', value: '1' },
+        { name: '2', value: '2' },
+        { name: '3', value: '3' },
+        { name: '4', value: '4' }
+      ],
+      level2List: [
+        { name: '请选择', value: '' },
+        { name: '11', value: '11' },
+        { name: '21', value: '21' },
+        { name: '31', value: '31' },
+        { name: '41', value: '41' }
+      ],
+      level3List: [{ name: '请选择', value: '' }],
+      selectDefaultValue: [{ name: '2', value: '2' }, { name: '21', value: '21' }],
+      selectValueString: '请选择',
+      isSelectShow: false
     };
   },
   components: {
@@ -92,21 +81,19 @@ export default{
     ymSwitch,
     ymCheckbox,
     ymRadio,
-    ymSheet
+    ymSelect
   },
-  computed: {
-    showAddress () {
-      let province = this.provinceList.find(item => item.id === this.address.province) || {name: '选择省'};
-      let city = this.cityList.find(item => item.id === this.address.city) || {name: '选择市'};
-      return `${province.name} - ${city.name}`;
+  mounted () {
+    if (this.selectDefaultValue.length > 0) {
+      this.selectValueString = '';
+      this.selectDefaultValue.map((item, index) => {
+        index === this.selectDefaultValue.length - 1 ? this.selectValueString += item.name : this.selectValueString += item.name + '-';
+      });
     }
   },
   methods: {
     switchChange (e) {
       console.log(e);
-    },
-    getStore () {
-      console.log(this.$store.state.personInfo);
     },
     changeRadio (data) {
       this.radioDefaultValue = data;
@@ -114,20 +101,52 @@ export default{
     changeCheckbox (data) {
       this.checkDefaultValue = data;
     },
-    showSheet () {
-      this.isShow = true;
+    changeSelect (data) {
+      if (data.level === 'level1') {
+        if (data.selectValue) {
+          this.level2List = [
+            { name: '请选择', value: '' },
+            { name: '11', value: '11' },
+            { name: '21', value: '21' },
+            { name: '31', value: '31' },
+            { name: '41', value: '41' }
+          ];
+        } else {
+          this.level2List = [{ name: '请选择', value: '' }];
+        }
+        this.level3List = [{ name: '请选择', value: '' }];
+      } else if (data.level === 'level2') {
+        if (data.selectValue) {
+          this.level3List = [
+            { name: '请选择', value: '' },
+            { name: '111', value: '111' },
+            { name: '211', value: '211' },
+            { name: '311', value: '311' },
+            { name: '411', value: '411' }
+          ];
+        } else {
+          this.level3List = [{ name: '请选择', value: '' }];
+        }
+      }
     },
-    clickSheet (data) {
-      console.log(data);
-      this.isShow = false;
+    selectShow () {
+      this.isSelectShow = true;
+    },
+    select (data) {
+      this.isSelectShow = false;
+      this.selectDefaultValue = data;
+      this.selectValueString = '';
+      this.selectDefaultValue.map((item, index) => {
+        index === this.selectDefaultValue.length - 1 ? this.selectValueString += item.name : this.selectValueString += item.name + '-';
+      });
+    },
+    cancel () {
+      this.isSelectShow = false;
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-.center{
-  text-align: center;
-}
 .box{
   width: 94%;
   margin: 1rem auto;
@@ -138,15 +157,5 @@ export default{
   .formInput{
     font-size:1rem;
   }
-}
-.btn{
-  width: 90%;
-  margin: 3rem auto;
-  background: #1da1f2;
-  text-align: center;
-  height: 3rem;
-  line-height: 3rem;
-  color: #fff;
-  border-radius: .5rem;
 }
 </style>

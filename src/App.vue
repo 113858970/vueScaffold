@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <p v-if="invalidRoute">404</p>
-    <router-view v-else></router-view>
+    <router-view v-else v-wechat-title="$route.meta.title"></router-view>
   </div>
 </template>
 

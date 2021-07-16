@@ -1,18 +1,38 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import index from '@/pages/index/index';
-import form from '@/pages/form/form';
-import swiper from '@/pages/swiper/swiper';
-import lottery from '@/pages/lottery/lottery';
-import lottery1 from '@/pages/lottery/lottery1';
 
 Vue.use(Router);
 const routes = [
   { path: '/', redirect: '/index' },
-  { path: '/index', component: index },
-  { path: '/form', component: form },
-  { path: '/lottery', component: lottery },
-  { path: '/lottery1', component: lottery1 },
-  { path: '/swiper', component: swiper }
+  {
+    path: '/index',
+    name: 'index',
+    component: r => require.ensure([], () => r(require('@/pages/index/index'))),
+    meta: { title: '首页' }
+  },
+  {
+    path: '/form',
+    name: 'form',
+    component: r => require.ensure([], () => r(require('@/pages/form/form'))),
+    meta: { title: '表单' }
+  },
+  {
+    path: '/swiper',
+    name: 'swiper',
+    component: r => require.ensure([], () => r(require('@/pages/swiper/swiper'))),
+    meta: { title: '焦点图' }
+  },
+  {
+    path: '/lottery',
+    name: 'lottery',
+    component: r => require.ensure([], () => r(require('@/pages/lottery/lottery'))),
+    meta: { title: '抽奖1' }
+  },
+  {
+    path: '/lottery1',
+    name: 'lottery1',
+    component: r => require.ensure([], () => r(require('@/pages/lottery/lottery1'))),
+    meta: { title: '抽奖2' }
+  }
 ];
 export default new Router({routes});

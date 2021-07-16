@@ -4,6 +4,9 @@ import router from './router';
 import store from '@/store';
 import toast from '@/plugins/toast';
 import loading from '@/plugins/loading';
+import VueWechatTitle from 'vue-wechat-title';
+
+Vue.use(VueWechatTitle);
 Vue.config.productionTip = false;
 Vue.use(toast);
 Vue.use(loading);
